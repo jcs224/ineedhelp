@@ -28,7 +28,8 @@
     "@adonisjs/shield": "^1.0.8"
   },
   "devDependencies": {
-    "@adonisjs/cli": "^4.0.12"
+    "@adonisjs/cli": "^4.0.12",
+    "ngrok": "^3.2.7"
   },
   "autoload": {
     "App": "./app"
