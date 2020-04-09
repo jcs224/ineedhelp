@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Need Stuff</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.1/css/bulma.min.css" />
+</head>
+<body>
+  <nav class="navbar is-primary">
+    <div class="navbar-brand">
+      <a href="#" class="navbar-item is-size-5">I Need Stuff</a>
+    </div>
+  </nav>
+
+  <div class="container is-fluid" style="margin-top: 32px">
+    <div id="needs" class="columns is-mobile"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/2.0.4/mithril.min.js"></script>
+  <script>
+    var NeedModel = {
+      needs: [],
+
+      getNeeds: function() {
+        m.request('/api/needs').then(function(response) {
+          NeedModel.needs = response
+        })
+      }
+    }
+
+    var App = function() {
+      return {
+        oninit: function() {
+          NeedModel.getNeeds()
+        },
+
+        view: function() {
+          return NeedModel.needs.map(function(need) {
+            return m('.column.is-one-quarter-desktop', [
+              m('.card', [
+                m('header.card-header.has-background-info', [
+                  m('p.card-header-title.has-text-white', [
+                    need.name
+                  ])
+                ]),
+                m('.card-content', [
+                  m('.content', need.description)
+                ])
+              ])
+            ])
+          })
+        }
+      }
+    }
+
+    m.mount(document.getElementById('needs'), App)
+  </script>
+</body>
+</html>

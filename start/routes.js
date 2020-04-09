@@ -19,7 +19,7 @@ const VoiceResponse = require('twilio').twiml.VoiceResponse
 
 const Need = use('App/Models/Need')
 
-Route.on('/').render('welcome')
+Route.on('/').render('index')
 
 Route.get('/intro', async ({ request, response }) => {
   let need = new Need()
@@ -35,7 +35,7 @@ Route.get('/intro', async ({ request, response }) => {
     method: 'GET'
   })
 
-  gather.say('Thanks for calling "I need stuff". After the beep, please state your name. Once you\'ve stated your name, press any number to continue.')
+  gather.say('Thanks for calling "I need stuff". Please say your name. Once you\'ve stated your name, press any number to continue.')
   twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
   return response.type('text/xml').send(twiml.toString())
@@ -70,5 +70,12 @@ Route.get('/getdescription', async ({ request, response }) => {
 
   return response.type('text/xml').send(twiml.toString())
 })
+
+Route.group(() => {
+  Route.get('needs', async () => {
+    let needs = await Need.all()
+    return needs
+  })
+}).prefix('api')
 
 
