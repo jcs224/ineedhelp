@@ -40,11 +40,11 @@ Route.get('/getname', ({ request, response }) => {
   console.log(request.input('CallSid'))
 
   const twiml = new VoiceResponse()
-  const gather = twiml.gather({
-    input: 'dtmf speech',
-    numDigits: 1,
+  // const gather = twiml.gather({
+  //   input: 'dtmf speech',
+  //   numDigits: 1,
 
-  })
+  // })
 
   twiml.say('Thanks, goodbye!')
 
