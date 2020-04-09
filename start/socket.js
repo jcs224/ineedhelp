@@ -15,6 +15,6 @@
 
 const Ws = use('Ws')
 
-Ws.channel('chat', ({ socket }) => {
+Ws.channel('needs', ({ socket }) => {
   console.log('user joined with %s socket id', socket.id)
 })

@@ -18,6 +18,7 @@ const Route = use('Route')
 const VoiceResponse = require('twilio').twiml.VoiceResponse
 
 const Need = use('App/Models/Need')
+const Ws = use('Ws')
 
 Route.on('/').render('index')
 
@@ -64,6 +65,8 @@ Route.get('/getdescription', async ({ request, response }) => {
   let need = await Need.query().where('call_sid', request.input('CallSid')).first()
   need.description = request.input('SpeechResult')
   await need.save()
+
+  Ws.getChannel('needs').topic('needs').broadcast('need::new', need)
 
   const twiml = new VoiceResponse()
   twiml.say('Thanks, your request has been submitted. Goodbye!')
