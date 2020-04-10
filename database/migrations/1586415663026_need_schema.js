@@ -9,8 +9,8 @@ class NeedSchema extends Schema {
       table.increments()
       table.string('call_sid')
       table.string('phone')
-      table.string('name')
-      table.text('description')
+      table.text('transcription')
+      table.string('recording_url')
       table.timestamps()
     })
   }

@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Need Stuff</title>
+  <title>I Need Help</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.1/css/bulma.min.css" />
 </head>
 <body>
   <nav class="navbar is-primary container is-fluid">
     <div class="navbar-brand">
-      <a href="#" class="navbar-item is-size-5">I Need Stuff</a>
+      <a href="#" class="navbar-item is-size-5">I Need Help</a>
     </div>
   </nav>
 
@@ -55,13 +55,13 @@
           return NeedModel.needs.map(function(need) {
             return m('.column.is-one-quarter-desktop', [
               m('.card', [
-                m('header.card-header.has-background-info', [
-                  m('p.card-header-title.has-text-white', [
-                    need.name
-                  ])
-                ]),
                 m('.card-content', [
-                  m('.content', need.description)
+                  m('.content', [
+                    m('audio', {
+                      controls: true,
+                      src: need.recording_url
+                    })
+                  ])
                 ])
               ])
             ])

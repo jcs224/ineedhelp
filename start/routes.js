@@ -47,13 +47,13 @@ Route.get('agreed', async ({ request, response }) => {
     need.phone = request.input('From')
     await need.save()
 
-    const gather = twiml.gather({
-      input: 'speech',
-      action: '/getname',
-      method: 'GET'
+    twiml.say('Okay, great. After the beep, please introduce yourself and tell us what you need.')
+    twiml.record({
+      action: '/endcall',
+      method: 'GET',
+      recordingStatusCallback: '/callrecorded',
+      recordingStatusCallbackMethod: 'GET',
     })
-
-    gather.say('Okay, great. Please say your first name.')
     twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
     return response.type('text/xml').send(twiml.toString())
@@ -63,38 +63,21 @@ Route.get('agreed', async ({ request, response }) => {
   }
 })
 
-Route.get('getname', async ({ request, response }) => {
-  let need = await Need.query().where('call_sid', request.input('CallSid')).first()
-  need.name = request.input('SpeechResult')
-  await need.save()
-
+Route.get('endcall', async ({ request, response }) => {
   const twiml = new VoiceResponse()
-  const gather = twiml.gather({
-    input: 'speech',
-    action: '/getdescription',
-    method: 'GET'
-  })
-
-  gather.say('Thanks. Now, please tell us what you need.')
-  twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
-
+  twiml.say('Thanks, your request has been submitted. Goodbye!')
   return response.type('text/xml').send(twiml.toString())
 })
 
-Route.get('getdescription', async ({ request, response }) => {
+Route.get('callrecorded', async ({ request }) => {
   let need = await Need.query().where('call_sid', request.input('CallSid')).first()
-  need.description = request.input('SpeechResult')
+  need.recording_url = request.input('RecordingUrl')
   await need.save()
 
   const needsTopic = Ws.getChannel('needs').topic('needs')
   if (needsTopic) {
     needsTopic.broadcast('need::new', need)
   }
-
-  const twiml = new VoiceResponse()
-  twiml.say('Thanks, your request has been submitted. Goodbye!')
-
-  return response.type('text/xml').send(twiml.toString())
 })
 
 Route.group(() => {
