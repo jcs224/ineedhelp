@@ -127,6 +127,19 @@ Route.get('needs/:id/finish', async ({ params, auth, response}) => {
   response.redirect('/')
 })
 
+Route.get('needs/:id/putbackinqueue', async ({ params, auth, response }) => {
+  let need = await Need.find(params.id)
+  need.status = 'open'
+  await need.save()
+
+  const needsTopic = Ws.getChannel('needs').topic('needs')
+  if (needsTopic) {
+    needsTopic.broadcast('need::backinqueue', need)
+  }
+
+  response.redirect('/')
+})
+
 Route.get('needs/:id', async ({ params, view }) => {
   let need = await Need.find(params.id)
 

@@ -29,6 +29,11 @@
     m.redraw()
   })
 
+  needsNotif.on('need::backinqueue', function(need) {
+    NeedModel.needs.push(need)
+    m.redraw()
+  })
+
   var loggedIn = false
 
   @loggedIn
