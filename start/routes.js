@@ -22,7 +22,7 @@ const Ws = use('Ws')
 
 Route.on('/').render('index')
 
-Route.get('/intro', ({ response }) => {
+Route.get('intro', ({ response }) => {
 
   const twiml = new VoiceResponse()
   const gather = twiml.gather({
@@ -38,10 +38,7 @@ Route.get('/intro', ({ response }) => {
   return response.type('text/xml').send(twiml.toString())
 })
 
-Route.get('/agreed', async ({ request, response }) => {
-
-  console.log(request.all())
-
+Route.get('agreed', async ({ request, response }) => {
   const twiml = new VoiceResponse()
 
   if (request.input('Digits') == '1') {
@@ -53,7 +50,7 @@ Route.get('/agreed', async ({ request, response }) => {
     const gather = twiml.gather({
       input: 'speech',
       action: '/getname',
-      method: 'get'
+      method: 'GET'
     })
 
     gather.say('Okay, great. Please say your first name.')
@@ -66,7 +63,7 @@ Route.get('/agreed', async ({ request, response }) => {
   }
 })
 
-Route.get('/getname', async ({ request, response }) => {
+Route.get('getname', async ({ request, response }) => {
   let need = await Need.query().where('call_sid', request.input('CallSid')).first()
   need.name = request.input('SpeechResult')
   await need.save()
@@ -84,12 +81,15 @@ Route.get('/getname', async ({ request, response }) => {
   return response.type('text/xml').send(twiml.toString())
 })
 
-Route.get('/getdescription', async ({ request, response }) => {
+Route.get('getdescription', async ({ request, response }) => {
   let need = await Need.query().where('call_sid', request.input('CallSid')).first()
   need.description = request.input('SpeechResult')
   await need.save()
 
-  Ws.getChannel('needs').topic('needs').broadcast('need::new', need)
+  const needsTopic = Ws.getChannel('needs').topic('needs')
+  if (needsTopic) {
+    needsTopic.broadcast('need::new', need)
+  }
 
   const twiml = new VoiceResponse()
   twiml.say('Thanks, your request has been submitted. Goodbye!')
