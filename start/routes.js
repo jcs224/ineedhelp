@@ -22,24 +22,48 @@ const Ws = use('Ws')
 
 Route.on('/').render('index')
 
-Route.get('/intro', async ({ request, response }) => {
-  let need = new Need()
-  need.call_sid = request.input('CallSid')
-  need.phone = request.input('From')
-  await need.save()
+Route.get('/intro', ({ response }) => {
 
   const twiml = new VoiceResponse()
   const gather = twiml.gather({
-    input: 'dtmf speech',
+    input: 'dtmf',
     numDigits: 1,
-    action: '/getname',
+    action: '/agreed',
     method: 'GET'
   })
 
-  gather.say('Thanks for calling "I need stuff". Please say your name. Once you\'ve stated your name, press any number to continue.')
+  gather.say('Thanks for calling "I need stuff". This call will be recorded and made available on a public website. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
   twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
   return response.type('text/xml').send(twiml.toString())
+})
+
+Route.get('/agreed', async ({ request, response }) => {
+
+  console.log(request.all())
+
+  const twiml = new VoiceResponse()
+
+  if (request.input('Digits') == '1') {
+    let need = new Need()
+    need.call_sid = request.input('CallSid')
+    need.phone = request.input('From')
+    await need.save()
+
+    const gather = twiml.gather({
+      input: 'speech',
+      action: '/getname',
+      method: 'get'
+    })
+
+    gather.say('Okay, great. Please say your first name.')
+    twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
+
+    return response.type('text/xml').send(twiml.toString())
+  } else {
+    twiml.say('You have rejected the terms, so this call will not be recorded and will now end. Goodbye!')
+    return response.type('text/xml').send(twiml.toString())
+  }
 })
 
 Route.get('/getname', async ({ request, response }) => {
@@ -49,13 +73,12 @@ Route.get('/getname', async ({ request, response }) => {
 
   const twiml = new VoiceResponse()
   const gather = twiml.gather({
-    input: 'dtmf speech',
-    numDigits: 1,
+    input: 'speech',
     action: '/getdescription',
     method: 'GET'
   })
 
-  gather.say('Thanks. Now, please tell us what you need, then press any number.')
+  gather.say('Thanks. Now, please tell us what you need.')
   twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
   return response.type('text/xml').send(twiml.toString())
