@@ -1,0 +1,17 @@
+@layout('layout')
+
+@section('content')
+<h2>Phone number of person in need</h2>
+<p>{{ need.phone }}</p>
+
+<div>
+  <h2>Audio recording</h2>
+  <audio controls src="{{ need.recording_url }}"></audio>
+</div>
+
+<div>
+  @if(need.status == 'inprogress')
+  <a href="/needs/{{ need.id }}/finish" class="button is-success" >I finished helping this person</a>
+  @endif
+</div>
+@endsection

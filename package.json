@@ -29,6 +29,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
+    "mysql": "^2.18.1",
     "sqlite3": "^4.1.1",
     "twilio": "^3.42.1"
   },

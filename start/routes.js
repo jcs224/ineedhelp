@@ -20,8 +20,10 @@ const VoiceResponse = require('twilio').twiml.VoiceResponse
 const Need = use('App/Models/Need')
 const Ws = use('Ws')
 
+// Homepage
 Route.on('/').render('index')
 
+// Twilio routes
 Route.get('intro', ({ response }) => {
 
   const twiml = new VoiceResponse()
@@ -80,13 +82,15 @@ Route.get('callrecorded', async ({ request }) => {
   }
 })
 
+// JSON routes
 Route.group(() => {
   Route.get('needs', async () => {
-    let needs = await Need.all()
+    let needs = await Need.query().where('status', 'open').fetch()
     return needs
   })
 }).prefix('api')
 
+// User login/registration
 Route.get('register', ({ view }) => {
   return view.render('register')
 })
@@ -99,3 +103,34 @@ Route.get('logout', 'UserController.logout')
 
 Route.post('register', 'UserController.register')
 Route.post('login', 'UserController.login')
+
+// Needs
+Route.get('needs/:id/help', async ({ params, auth, response }) => {
+  let need = await Need.find(params.id)
+  need.status = 'inprogress'
+  need.helped_by = auth.user.id
+  await need.save()
+
+  const needsTopic = Ws.getChannel('needs').topic('needs')
+  if (needsTopic) {
+    needsTopic.broadcast('need::beinghelped', need)
+  }
+
+  response.redirect('/needs/'+need.id)
+}).middleware(['auth'])
+
+Route.get('needs/:id/finish', async ({ params, auth, response}) => {
+  let need = await Need.find(params.id)
+  need.status = 'completed'
+  await need.save()
+
+  response.redirect('/')
+})
+
+Route.get('needs/:id', async ({ params, view }) => {
+  let need = await Need.find(params.id)
+
+  return view.render('need', {
+    need: need
+  })
+})

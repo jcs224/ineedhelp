@@ -3,6 +3,7 @@
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/2.0.4/mithril.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.4/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script src="https://unpkg.com/@adonisjs/websocket-client"></script>
 <script>
   var ws = adonis.Ws('ws://d8004b90.ngrok.io')
@@ -19,6 +20,15 @@
     m.redraw()
   })
 
+  needsNotif.on('need::beinghelped', function(needBeingHelped) {
+    var beingHelpedIndex = _.findIndex(NeedModel.needs, function(need) {
+      return need.id == needBeingHelped.id
+    })
+
+    NeedModel.needs.splice(beingHelpedIndex, 1)
+    m.redraw()
+  })
+
   var loggedIn = false
 
   @loggedIn
@@ -32,7 +42,17 @@
       m.request('/api/needs').then(function(response) {
         NeedModel.needs = response
       })
-    }
+    },
+
+    // help: function(id) {
+    //   m.request('/needs/:id/help', {
+    //     method: 'POST',
+    //     params: {
+    //       id: id,
+    //       '_csrf': '{{ csrfToken }}'
+    //     },
+    //   })
+    // }
   }
 
   var App = function() {
@@ -54,7 +74,9 @@
                 ])
               ]),
               loggedIn ? m('.card-footer', [
-                m('a.card-footer-item', [
+                m('a.card-footer-item', {
+                  href: '/needs/'+need.id+'/help'
+                }, [
                   m('i.fas.fa-hands-helping', {
                     style: 'margin-right: 0.5rem;'
                   }),
