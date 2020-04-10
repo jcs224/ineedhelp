@@ -164,6 +164,15 @@
     haye "^2.0.1"
     lodash "^4.17.5"
 
+"@adonisjs/persona@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@adonisjs/persona/-/persona-1.0.5.tgz#d4c21dfc06e199ca19ebc67987d2d38f1a58ac51"
+  integrity sha512-VFdZ2CAx8WhDih/AkIf9ZG+62QESiInC4oAz+p4HNsY7fG0DDlbDX4TBPwSK1YOdiZCE6t2T0AcpChtXiBp5xg==
+  dependencies:
+    "@adonisjs/generic-exceptions" "^2.0.0"
+    moment "^2.22.1"
+    rand-token "^0.4.0"
+
 "@adonisjs/session@^1.0.27":
   version "1.0.29"
   resolved "https://registry.yarnpkg.com/@adonisjs/session/-/session-1.0.29.tgz#4f397d28afe2c20ba88b1c1d431c56b783461ed6"
@@ -2708,7 +2717,7 @@ mkpath@^0.1.0:
   resolved "https://registry.yarnpkg.com/mkpath/-/mkpath-0.1.0.tgz#7554a6f8d871834cc97b5462b122c4c124d6de91"
   integrity sha1-dVSm+Nhxg0zJe1RisSLEwSTW3pE=
 
-moment@^2.22.2:
+moment@^2.22.1, moment@^2.22.2:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -3464,6 +3473,11 @@ radio-symbol@^2.0.0:
     ansi-gray "^0.1.1"
     ansi-green "^0.1.1"
     is-windows "^1.0.1"
+
+rand-token@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/rand-token/-/rand-token-0.4.0.tgz#1a565b6ad12d92dd4b30c4c4e5945e8aa24a5b3b"
+  integrity sha512-FLNNsir2R+XY8LKsZ+8u/w0qZ4sGit7cpNdznsI77cAVob6UlVPueDKRyjJ3W1Q6FJLgAVH98JvlqqpSaL7NEQ==
 
 random-bytes@~1.0.0:
   version "1.0.0"

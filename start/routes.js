@@ -87,4 +87,7 @@ Route.group(() => {
   })
 }).prefix('api')
 
+Route.get('register', ({ view }) => {
+  return view.render('register')
+})
 

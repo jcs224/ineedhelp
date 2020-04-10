@@ -1,76 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Need Help</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.1/css/bulma.min.css" />
-</head>
-<body>
-  <nav class="navbar is-primary container is-fluid">
-    <div class="navbar-brand">
-      <a href="#" class="navbar-item is-size-5">I Need Help</a>
-    </div>
-  </nav>
+@layout('layout')
 
-  <div class="container is-fluid" style="margin-top: 32px">
-    <div id="needs" class="columns is-mobile" style="flex-wrap: wrap"></div>
-  </div>
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/2.0.4/mithril.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.4/polyfill.min.js"></script>
+<script src="https://unpkg.com/@adonisjs/websocket-client"></script>
+<script>
+  var ws = adonis.Ws('ws://d8004b90.ngrok.io')
+  ws.connect()
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/2.0.4/mithril.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.4/polyfill.min.js"></script>
-  <script src="https://unpkg.com/@adonisjs/websocket-client"></script>
-  <script>
-    var ws = adonis.Ws('ws://localhost:3333')
-    ws.connect()
+  ws.on('open', () => {
+    console.log('websocket connection successful')
+  })
 
-    ws.on('open', () => {
-      console.log('websocket connection successful')
-    })
+  var needsNotif = ws.subscribe('needs')
 
-    var needsNotif = ws.subscribe('needs')
+  needsNotif.on('need::new', function(need) {
+    NeedModel.needs.push(need)
+    m.redraw()
+  })
 
-    needsNotif.on('need::new', function(need) {
-      NeedModel.needs.push(need)
-      m.redraw()
-    })
+  var NeedModel = {
+    needs: [],
 
-    var NeedModel = {
-      needs: [],
-
-      getNeeds: function() {
-        m.request('/api/needs').then(function(response) {
-          NeedModel.needs = response
-        })
-      }
+    getNeeds: function() {
+      m.request('/api/needs').then(function(response) {
+        NeedModel.needs = response
+      })
     }
+  }
 
-    var App = function() {
-      return {
-        oninit: function() {
-          NeedModel.getNeeds()
-        },
+  var App = function() {
+    return {
+      oninit: function() {
+        NeedModel.getNeeds()
+      },
 
-        view: function() {
-          return NeedModel.needs.map(function(need) {
-            return m('.column.is-one-quarter-desktop', [
-              m('.card', [
-                m('.card-content', [
-                  m('.content', [
-                    m('audio', {
-                      controls: true,
-                      src: need.recording_url
-                    })
-                  ])
+      view: function() {
+        return NeedModel.needs.map(function(need) {
+          return m('.column.is-one-quarter-desktop', [
+            m('.card', [
+              m('.card-content', [
+                m('.content', [
+                  m('audio', {
+                    controls: true,
+                    src: need.recording_url
+                  })
                 ])
               ])
             ])
-          })
-        }
+          ])
+        })
       }
     }
+  }
 
-    m.mount(document.getElementById('needs'), App)
-  </script>
-</body>
-</html>
+  m.mount(document.getElementById('needs'), App)
+</script>
+@endsection
+
+@section('content')
+<div id="needs" class="columns is-mobile" style="flex-wrap: wrap"></div>
+@endsection
