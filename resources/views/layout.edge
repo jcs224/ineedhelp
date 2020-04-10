@@ -14,10 +14,14 @@
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item">
+          @loggedIn
+          Hello, {{ auth.user.first_name }}
+          @else
           <div class="buttons">
             <a href="/register" class="button is-info">Sign Up to Help</a>
             <a href="/login" class="button is-light">Log In</a>
           </div>
+          @endloggedIn
         </div>
       </div>
     </div>

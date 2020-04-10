@@ -91,3 +91,5 @@ Route.get('register', ({ view }) => {
   return view.render('register')
 })
 
+Route.post('register', 'UserController.register')
+
