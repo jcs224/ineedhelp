@@ -32,7 +32,7 @@ Route.get('intro', ({ response }) => {
     method: 'GET'
   })
 
-  gather.say('Thanks for calling "I need stuff". This call will be recorded and made available on a public website. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
+  gather.say('Thanks for calling "I need help". This call will be recorded and made available on a public website. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
   twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
   return response.type('text/xml').send(twiml.toString())
