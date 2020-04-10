@@ -32,7 +32,7 @@ Route.get('intro', ({ response }) => {
     method: 'GET'
   })
 
-  gather.say('Thanks for calling "I need help". This call will be recorded and made available on a public website. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
+  gather.say('Thanks for calling "I need help". This call will be recorded and made available on a public website, where someone local can reach out to help you. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
   twiml.say('We didn\'t receive any input. If you had any trouble, please hang up and call again. Goodbye!')
 
   return response.type('text/xml').send(twiml.toString())
@@ -47,7 +47,7 @@ Route.get('agreed', async ({ request, response }) => {
     need.phone = request.input('From')
     await need.save()
 
-    twiml.say('Okay, great. After the beep, please introduce yourself and tell us what you need.')
+    twiml.say('Okay, great. After the beep, please introduce yourself and tell us what you need. When you\'ve finished speaking, please wait a few seconds for the next prompt.')
     twiml.record({
       action: '/endcall',
       method: 'GET',
@@ -65,7 +65,7 @@ Route.get('agreed', async ({ request, response }) => {
 
 Route.get('endcall', async ({ request, response }) => {
   const twiml = new VoiceResponse()
-  twiml.say('Thanks, your request has been submitted. Goodbye!')
+  twiml.say('Thanks, your request has been submitted. When a helper assigns themselves to your request, they may reach out to you if they need more information. Goodbye!')
   return response.type('text/xml').send(twiml.toString())
 })
 
