@@ -19,6 +19,12 @@
     m.redraw()
   })
 
+  var loggedIn = false
+
+  @loggedIn
+  loggedIn = true
+  @endloggedIn
+
   var NeedModel = {
     needs: [],
 
@@ -46,7 +52,10 @@
                     src: need.recording_url
                   })
                 ])
-              ])
+              ]),
+              loggedIn ? m('.card-footer', [
+                m('a.card-footer-item', 'Help this person')
+              ]) : null
             ])
           ])
         })
@@ -59,5 +68,10 @@
 @endsection
 
 @section('content')
+<h2>If you need help, or know someone who does, please call <strong>{{ numberToCall }}</strong></h2>
+@loggedIn
+@else
+<h2>If you'd like to help these people, please <a href="/register">sign up</a> or <a href="/login">log in</a> if you have an account already.</h2>
+@endloggedIn
 <div id="needs" class="columns is-mobile" style="flex-wrap: wrap"></div>
 @endsection

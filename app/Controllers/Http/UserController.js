@@ -32,6 +32,11 @@ class UserController {
     await auth.login(user)
     response.redirect('/')
   }
+
+  async logout({ auth, response }) {
+    await auth.logout()
+    response.redirect('/')
+  }
 }
 
 module.exports = UserController

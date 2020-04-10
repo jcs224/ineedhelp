@@ -11,6 +11,8 @@ class NeedSchema extends Schema {
       table.string('phone')
       table.text('transcription')
       table.string('recording_url')
+      table.string('status').defaultTo('open')
+      table.integer('helped_by')
       table.timestamps()
     })
   }

@@ -91,5 +91,11 @@ Route.get('register', ({ view }) => {
   return view.render('register')
 })
 
-Route.post('register', 'UserController.register')
+Route.get('login', ({ view }) => {
+  return view.render('login')
+})
 
+Route.get('logout', 'UserController.logout')
+
+Route.post('register', 'UserController.register')
+Route.post('login', 'UserController.login')

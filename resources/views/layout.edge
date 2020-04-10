@@ -13,9 +13,16 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item @loggedIn has-dropdown is-hoverable @endloggedIn">
           @loggedIn
-          Hello, {{ auth.user.first_name }}
+          <a class="navbar-link">
+            <i class="fas fa-user" style="margin-right: 0.5rem;"></i> {{ auth.user.first_name }}
+          </a>
+
+          <div class="navbar-dropdown">
+            <a href="#" class="navbar-item">Profile</a>
+            <a href="/logout" class="navbar-item">Log Out</a>
+          </div>
           @else
           <div class="buttons">
             <a href="/register" class="button is-info">Sign Up to Help</a>
@@ -31,6 +38,7 @@
     @!section('content')
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
   @!section('scripts')
 </body>
 </html>
