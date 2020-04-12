@@ -19,7 +19,7 @@
 <script src="https://cdn.plyr.io/3.5.10/plyr.polyfilled.js"></script>
 <script src="https://unpkg.com/@adonisjs/websocket-client"></script>
 <script>
-  var ws = adonis.Ws('ws://d8004b90.ngrok.io')
+  var ws = adonis.Ws('ws://86490a51.ngrok.io')
   ws.connect()
 
   ws.on('open', () => {
@@ -119,10 +119,10 @@
 
 @section('content')
 <div style="margin-bottom: 24px;">
-  <p>If you need help, or know someone who does, please call <strong>{{ numberToCall }}</strong></p>
+  <div class="alert alert-primary">If you need help, or know someone who does, please call <strong>{{ numberToCall }}</strong></div class="alert alert-primary">
   @loggedIn
   @else
-  <p>If you'd like to help these people, please <a href="/register">sign up</a> or <a href="/login">log in</a> if you have an account already.</p>
+  <div class="alert alert-secondary">If you'd like to help these people, please <a href="/register">sign up</a> or <a href="/login">log in</a> if you have an account already.</div>
   @endloggedIn
 </div>
 <div id="needs" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"></div>

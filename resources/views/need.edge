@@ -11,8 +11,8 @@
 
 <div>
   @if(need.status == 'inprogress')
-  <a href="/needs/{{ need.id }}/finish" class="button is-success" >I finished helping this person</a>
-  <a href="/needs/{{ need.id }}/putbackinqueue" class="button is-dark" >Let someone else help this person</a>
+  <a href="/needs/{{ need.id }}/finish" class="btn btn-success" >I finished helping this person</a>
+  <a href="/needs/{{ need.id }}/putbackinqueue" class="btn btn-dark" >Let someone else help this person</a>
   @endif
 </div>
 @endsection
