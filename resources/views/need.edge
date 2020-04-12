@@ -1,18 +1,27 @@
 @layout('layout')
 
 @section('content')
-<h2>Phone number of person in need</h2>
-<p>{{ need.phone }}</p>
+<div class="row justify-content-md-center">
+  <div class="col-md-4">
+    @if(need.status == 'open')
+    <h2><span class="badge badge-success">Open</span></h2>
+    @elseif(need.status == 'inprogress')
+    <h2><span class="badge badge-primary">In Progress</span></h2>
+    @elseif(need.status == 'completed')
+    <h2><span class="badge badge-secondary">Completed</span></h2>
+    @endif
+    <div>
+      <audio controls src="{{ need.recording_url }}"></audio>
+    </div>
 
-<div>
-  <h2>Audio recording</h2>
-  <audio controls src="{{ need.recording_url }}"></audio>
-</div>
-
-<div>
-  @if(need.status == 'inprogress')
-  <a href="/needs/{{ need.id }}/finish" class="btn btn-success" >I finished helping this person</a>
-  <a href="/needs/{{ need.id }}/putbackinqueue" class="btn btn-dark" >Let someone else help this person</a>
-  @endif
+    <div>
+      @if(need.status == 'inprogress')
+      <a href="/needs/{{ need.id }}/finish" class="btn btn-block btn-success" >I finished helping this person</a>
+      <a href="/needs/{{ need.id }}/putbackinqueue" class="btn btn-block btn-dark" >Let someone else help this person</a>
+      @elseif(need.status == 'open')
+      <a href="/needs/{{ need.id }}/help" class="btn btn-block btn-primary" >Help this person</a>
+      @endif
+    </div>
+  </div>
 </div>
 @endsection
