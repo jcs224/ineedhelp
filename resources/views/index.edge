@@ -19,7 +19,7 @@
 <script src="https://cdn.plyr.io/3.5.10/plyr.polyfilled.js"></script>
 <script src="https://unpkg.com/@adonisjs/websocket-client"></script>
 <script>
-  var ws = adonis.Ws('ws://86490a51.ngrok.io')
+  var ws = adonis.Ws('{{ websocketUrl }}')
   ws.connect()
 
   ws.on('open', () => {

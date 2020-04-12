@@ -4,4 +4,5 @@ hooks.after.providersBooted(() => {
   const View = use('View')
   const Env = use('Env')
   View.global('numberToCall', Env.get('NUMBER_TO_CALL'))
+  View.global('websocketUrl', Env.get('WEBSOCKET_URL'))
 })
