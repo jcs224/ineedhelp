@@ -119,7 +119,7 @@
 
 @section('content')
 <div style="margin-bottom: 24px;">
-  <div class="alert alert-primary">If you need help, or know someone who does, please call <strong>{{ numberToCall }}</strong></div class="alert alert-primary">
+<div class="alert alert-primary">If you need help, or know someone who does, please call <a href="tel:{{ numberToCallActual }}"><strong>{{ numberToCallDisplay }}</strong></a></div class="alert alert-primary">
   @loggedIn
   @else
   <div class="alert alert-secondary">If you'd like to help these people, please <a href="/register">sign up</a> or <a href="/login">log in</a> if you have an account already.</div>
