@@ -3,21 +3,17 @@
 @section('content')
 <form method="POST" action="/login">
   {{ csrfField() }}
-  <div class="field">
+  <div class="form-group">
     <label for="" class="label">Email</label>
-    <div class="control">
-      <input type="email" class="input" name="email">
-    </div>
+    <input type="email" class="form-control" name="email">
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <label for="" class="label">Password</label>
-    <div class="control">
-      <input type="password" class="input" name="password">
-    </div>
+    <input type="password" class="form-control" name="password">
   </div>
 
-  <button type="submit" class="button is-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
 @endsection
