@@ -7,9 +7,15 @@
     <table class="table mt-4">
       <tbody>
         <tr>
+          @if(authUserNeedInProgress)
           <td><a href="/needs/current">Go to current task</a></td>
           <td></td>
+          @else
+          <td><a href="/">Find someone to help</a></td>
+          <td></td>
+          @endif
         </tr>
+
         <tr>
           <td>Tasks I've completed</td>
           <td>{{ tasksCompletedCount }}</td>

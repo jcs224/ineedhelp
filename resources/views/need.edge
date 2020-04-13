@@ -1,6 +1,9 @@
 @layout('layout')
 
 @section('content')
+@if(currentNeedView && !need)
+<h2>No current needs.</h2>
+@else
 <div class="row justify-content-md-center">
   <div class="col-md-4">
     @if(need.status == 'open')
@@ -24,4 +27,5 @@
     </div>
   </div>
 </div>
+@endif
 @endsection

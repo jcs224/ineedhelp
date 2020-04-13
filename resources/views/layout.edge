@@ -17,6 +17,11 @@
       <div class="navbar-collapse collapse" id="navMenu">
         @loggedIn
         <ul class="navbar-nav mr-auto">
+          @if(authUserNeedInProgress)
+          <li class="nav-item">
+            <a href="/needs/current" class="nav-link">My Current Task</a>
+          </li>
+          @endif
           <li class="nav-item">
             <a href="/my-stats" class="nav-link">My Stats</a>
           </li>

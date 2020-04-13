@@ -144,7 +144,8 @@ Route.get('needs/current', async ({ auth, view }) => {
   let need = await Need.query().where('helped_by', auth.user.id).where('status', 'inprogress').first()
 
   return view.render('need', {
-    need: need
+    need: need,
+    currentNeedView: true
   })
 })
 
