@@ -125,7 +125,7 @@ Route.get('needs/:id/finish', async ({ params, auth, response}) => {
   await need.save()
 
   response.redirect('/')
-})
+}).middleware(['auth'])
 
 Route.get('needs/:id/putbackinqueue', async ({ params, auth, response }) => {
   let need = await Need.find(params.id)
@@ -138,6 +138,14 @@ Route.get('needs/:id/putbackinqueue', async ({ params, auth, response }) => {
   }
 
   response.redirect('/')
+}).middleware(['auth'])
+
+Route.get('needs/current', async ({ auth, view }) => {
+  let need = await Need.query().where('helped_by', auth.user.id).where('status', 'inprogress').first()
+
+  return view.render('need', {
+    need: need
+  })
 })
 
 Route.get('needs/:id', async ({ params, view }) => {
@@ -146,4 +154,12 @@ Route.get('needs/:id', async ({ params, view }) => {
   return view.render('need', {
     need: need
   })
-})
+}).middleware(['auth'])
+
+Route.get('my-stats', async ({ view, auth }) => {
+  let tasksCompletedCount = await Need.query().where('helped_by', auth.user.id).where('status', 'completed').getCount()
+
+  return view.render('my-stats', {
+    tasksCompletedCount
+  })
+}).middleware(['auth'])

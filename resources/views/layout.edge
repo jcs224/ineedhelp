@@ -16,8 +16,13 @@
       </button>
       <div class="navbar-collapse collapse" id="navMenu">
         @loggedIn
-        <div class="navbar-nav">
-          <div class="nav-item dropdown">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a href="/my-stats" class="nav-link">My Stats</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
             <a
               href="#"
               class="nav-link dropdown-toggle"
@@ -26,14 +31,14 @@
               aria-expanded="false"
               role="button"
             >
-              <i class="fas fa-user" style="margin-right: 0.5rem;"></i> Joe
+              <i class="fas fa-user mr-3"></i> Joe
             </a>
             <div class="dropdown-menu">
               <a href="#" class="dropdown-item">Profile</a>
               <a href="/logout" class="dropdown-item">Log Out</a>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
         @else
         <div class="mt-2 mt-lg-0">
           <a href="/register" role="button" class="btn btn-success">Sign Up to Help</a>

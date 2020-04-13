@@ -1,0 +1,21 @@
+@layout('layout')
+
+@section('content')
+<h1 class="text-center">My Stats</h1>
+<div class="row justify-content-md-center">
+  <div class="col-md-4">
+    <table class="table mt-4">
+      <tbody>
+        <tr>
+          <td><a href="/needs/current">Go to current task</a></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tasks I've completed</td>
+          <td>{{ tasksCompletedCount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+@endsection
