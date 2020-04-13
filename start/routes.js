@@ -105,61 +105,14 @@ Route.post('register', 'UserController.register')
 Route.post('login', 'UserController.login')
 
 // Needs
-Route.get('needs/:id/help', async ({ params, auth, response }) => {
-  let need = await Need.find(params.id)
-  need.status = 'inprogress'
-  need.helped_by = auth.user.id
-  await need.save()
-
-  const needsTopic = Ws.getChannel('needs').topic('needs')
-  if (needsTopic) {
-    needsTopic.broadcast('need::beinghelped', need)
-  }
-
-  response.redirect('/needs/'+need.id)
-}).middleware(['auth'])
-
-Route.get('needs/:id/finish', async ({ params, auth, response}) => {
-  let need = await Need.find(params.id)
-  need.status = 'completed'
-  await need.save()
-
-  response.redirect('/')
-}).middleware(['auth'])
-
-Route.get('needs/:id/putbackinqueue', async ({ params, auth, response }) => {
-  let need = await Need.find(params.id)
-  need.status = 'open'
-  await need.save()
-
-  const needsTopic = Ws.getChannel('needs').topic('needs')
-  if (needsTopic) {
-    needsTopic.broadcast('need::backinqueue', need)
-  }
-
-  response.redirect('/')
-}).middleware(['auth'])
-
-Route.get('needs/current', async ({ auth, view }) => {
-  let need = await Need.query().where('helped_by', auth.user.id).where('status', 'inprogress').first()
-
-  return view.render('need', {
-    need: need,
-    currentNeedView: true
-  })
-})
-
-Route.get('needs/:id', async ({ params, view }) => {
-  let need = await Need.find(params.id)
-
-  return view.render('need', {
-    need: need
-  })
-}).middleware(['auth'])
+Route.get('needs/:id/help', 'NeedController.help').middleware(['auth'])
+Route.get('needs/:id/finish', 'NeedController.finish').middleware(['auth'])
+Route.get('needs/:id/putbackinqueue', 'NeedController.putBackInQueue').middleware(['auth'])
+Route.get('needs/current', 'NeedController.showCurrentNeed').middleware(['auth'])
+Route.get('needs/:id', 'NeedController.show').middleware(['auth'])
 
 Route.get('my-stats', async ({ view, auth }) => {
   let tasksCompletedCount = await Need.query().where('helped_by', auth.user.id).where('status', 'completed').getCount()
-
   return view.render('my-stats', {
     tasksCompletedCount
   })
