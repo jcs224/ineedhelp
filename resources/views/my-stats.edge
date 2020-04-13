@@ -17,8 +17,13 @@
         </tr>
 
         <tr>
-          <td>Tasks I've completed</td>
-          <td>{{ tasksCompletedCount }}</td>
+          <td>Number of times I've helped someone</td>
+          <td>
+            {{ tasksCompletedCount > 0 ? tasksCompletedCount : 'None.' }}
+            @if(tasksCompletedCount < 1)
+            <a href="/">Change that</a>
+            @endif
+          </td>
         </tr>
       </tbody>
     </table>
