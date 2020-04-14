@@ -2,6 +2,8 @@
 
 const Need = use('App/Models/Need')
 const Ws = use('Ws')
+const Env = use('Env')
+const twilioClient = require('twilio')(Env.get('TWILIO_ACCOUNT_SID'), Env.get('TWILIO_AUTH_TOKEN'))
 
 class NeedController {
   async show({ params, view }) {
@@ -46,6 +48,32 @@ class NeedController {
     let need = await Need.find(params.id)
     need.status = 'inprogress'
     need.helped_by = auth.user.id
+
+    let session = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+      .sessions.create({
+        uniqueName: 'user-'+auth.user.id+'_need-'+need.id
+      })
+
+    let needParticipant = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+      .sessions(session.sid)
+      .participants
+      .create({
+        friendlyName: 'need-'+need.id,
+        identifier: need.phone
+      })
+
+    need.need_phone_proxy = needParticipant.proxyIdentifier
+
+    let userParticipant = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+      .sessions(session.sid)
+      .participants
+      .create({
+        friendlyName: 'user-'+auth.user.id,
+        identifier: auth.user.phone
+      })
+
+    need.user_phone_proxy = userParticipant.proxyIdentifier
+
     await need.save()
 
     const needsTopic = Ws.getChannel('needs').topic('needs')

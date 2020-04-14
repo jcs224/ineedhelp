@@ -13,6 +13,8 @@ class NeedSchema extends Schema {
       table.string('recording_url')
       table.string('status').defaultTo('open')
       table.integer('helped_by')
+      table.string('need_phone_proxy')
+      table.string('user_phone_proxy')
       table.timestamps()
     })
   }
