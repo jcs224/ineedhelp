@@ -8,6 +8,7 @@ class UserController {
       'first_name',
       'last_name',
       'email',
+      'phone',
       'password',
       'password_confirmation'
     ])

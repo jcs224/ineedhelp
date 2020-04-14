@@ -1,5 +1,32 @@
 @layout('layout')
 
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/js/intlTelInput.min.js" integrity="sha256-hVkQ7xX9ywBkze+HSnYI0K8C/j1wIABeR4wXJfH7MHQ=" crossorigin="anonymous"></script>
+<script>
+  var input = document.querySelector("#phone");
+  window.intlTelInput(input, {
+    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/js/utils.js',
+    separateDialCode: true,
+    hiddenInput: 'phone'
+  });
+</script>
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/css/intlTelInput.css" integrity="sha256-rTKxJIIHupH7lFo30458ner8uoSSRYciA0gttCkw1JE=" crossorigin="anonymous" />
+<style>
+.iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/img/flags.png");}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/img/flags@2x.png");}
+}
+
+.iti {
+  display: inherit;
+}
+</style>
+@endsection
+
 @section('content')
 <div class="row justify-content-md-center">
   <div class="col-md-6 col-lg-4">
@@ -18,6 +45,11 @@
       <div class="form-group">
         <label for="" class="label">Email</label>
         <input type="email" class="form-control" name="email">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Phone Number</label>
+        <input id="phone" class="form-control" name="phone_raw">
       </div>
 
       <div class="form-group">
