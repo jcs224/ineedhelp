@@ -18,6 +18,7 @@ const Route = use('Route')
 const VoiceResponse = require('twilio').twiml.VoiceResponse
 
 const Need = use('App/Models/Need')
+const User = use('App/Models/User')
 const Ws = use('Ws')
 
 // Homepage
@@ -133,3 +134,15 @@ Route.get('my-stats', async ({ view, auth }) => {
     tasksCompletedCount
   })
 }).middleware(['auth'])
+
+Route.get('profile', async ({ view, auth }) => {
+  let user = await User.find(auth.user.id)
+
+  let userJSON = user.toJSON()
+
+  return view.render('profile', {
+    user: userJSON
+  })
+})
+
+Route.put('update-profile', 'UserController.updateProfile')

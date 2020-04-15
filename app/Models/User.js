@@ -6,6 +6,8 @@ const Hash = use('Hash')
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
+const { parsePhoneNumberFromString  } = require('libphonenumber-js')
+
 class User extends Model {
   static boot () {
     super.boot()
@@ -33,6 +35,21 @@ class User extends Model {
    */
   tokens () {
     return this.hasMany('App/Models/Token')
+  }
+
+  static get computed() {
+    return [
+      'phone_human_friendly'
+    ]
+  }
+
+  getPhoneHumanFriendly({ phone }) {
+    if (phone) {
+      const phoneNumber = parsePhoneNumberFromString(phone)
+      return phoneNumber.formatNational()
+    } else {
+      return phone
+    }
   }
 }
 

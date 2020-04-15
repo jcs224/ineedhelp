@@ -1,0 +1,73 @@
+@layout('layout')
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/js/intlTelInput.min.js" integrity="sha256-hVkQ7xX9ywBkze+HSnYI0K8C/j1wIABeR4wXJfH7MHQ=" crossorigin="anonymous"></script>
+<script>
+  var input = document.querySelector("#phone");
+  window.intlTelInput(input, {
+    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/js/utils.js',
+    separateDialCode: true,
+    hiddenInput: 'phone'
+  });
+</script>
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/css/intlTelInput.css" integrity="sha256-rTKxJIIHupH7lFo30458ner8uoSSRYciA0gttCkw1JE=" crossorigin="anonymous" />
+<style>
+.iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/img/flags.png");}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.1.0/img/flags@2x.png");}
+}
+
+.iti {
+  display: inherit;
+}
+</style>
+@endsection
+
+@section('content')
+<h1 class="text-center">Update Profile</h1>
+<div class="row justify-content-md-center">
+  <div class="col-md-6 col-lg-4">
+    @if(hasErrorFor('password'))
+    <div class="alert alert-danger">{{ getErrorFor('password') }}</div>
+    @endif
+    <form method="POST" action="/update-profile?_method=PUT">
+      {{ csrfField() }}
+      <div class="form-group">
+        <label for="" class="label">First Name</label>
+        <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Last Name</label>
+        <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Email</label>
+        <input type="email" class="form-control" name="email" value="{{ user.email }}">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Phone Number</label>
+        <input id="phone" class="form-control" name="phone_raw" value="{{ user.phone }}">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Password</label>
+        <input type="password" class="form-control" name="password">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Confirm Password</label>
+        <input type="password" class="form-control" name="password_confirmation">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+@endsection
