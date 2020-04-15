@@ -15,6 +15,7 @@ class NeedSchema extends Schema {
       table.integer('helped_by')
       table.string('need_phone_proxy')
       table.string('user_phone_proxy')
+      table.string('session_sid')
       table.timestamps()
     })
   }

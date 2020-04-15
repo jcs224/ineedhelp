@@ -26,6 +26,14 @@ class NeedController {
   async putBackInQueue({ params, response }) {
     let need = await Need.find(params.id)
     need.status = 'open'
+
+    await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+      .sessions(need.session_sid)
+      .remove()
+
+    need.need_phone_proxy = null
+    need.user_phone_proxy = null
+    need.session_sid = null
     await need.save()
 
     const needsTopic = Ws.getChannel('needs').topic('needs')
@@ -39,6 +47,15 @@ class NeedController {
   async finish({ params, response }) {
     let need = await Need.find(params.id)
     need.status = 'completed'
+
+    await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+      .sessions(need.session_sid)
+      .remove()
+
+    need.need_phone_proxy = null
+    need.user_phone_proxy = null
+    need.session_sid = null
+
     await need.save()
 
     response.redirect('/')
@@ -53,6 +70,8 @@ class NeedController {
       .sessions.create({
         uniqueName: 'user-'+auth.user.id+'_need-'+need.id
       })
+
+    need.session_sid = session.sid
 
     let needParticipant = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
       .sessions(session.sid)
