@@ -93,7 +93,16 @@ Route.get('callrecorded', async ({ request }) => {
 Route.group(() => {
   Route.get('needs', async () => {
     let needs = await Need.query().where('status', 'open').fetch()
-    return needs
+
+    let needsJSON = (needs.toJSON()).map(need => {
+      return {
+        id: need.id,
+        recording_url: need.recording_url,
+        created_human_friendly: need.created_human_friendly
+      }
+    })
+
+    return needsJSON
   })
 }).prefix('api')
 

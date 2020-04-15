@@ -4,10 +4,13 @@ const Need = use('App/Models/Need')
 const Ws = use('Ws')
 const Env = use('Env')
 const twilioClient = require('twilio')(Env.get('TWILIO_ACCOUNT_SID'), Env.get('TWILIO_AUTH_TOKEN'))
+const { v4: uuidv4 } = require('uuid')
 
 class NeedController {
   async show({ params, view }) {
     let need = await Need.find(params.id)
+
+    need = need.toJSON()
 
     return view.render('need', {
       need: need
@@ -68,7 +71,7 @@ class NeedController {
 
     let session = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
       .sessions.create({
-        uniqueName: 'user-'+auth.user.id+'_need-'+need.id
+        uniqueName: 'user-'+auth.user.id+'_need-'+need.id+'_'+uuidv4()
       })
 
     need.session_sid = session.sid

@@ -30,10 +30,12 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
+    "libphonenumber-js": "^1.7.50",
     "luxon": "^1.23.0",
     "mysql": "^2.18.1",
     "sqlite3": "^4.1.1",
-    "twilio": "^3.42.1"
+    "twilio": "^3.42.1",
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "@adonisjs/cli": "^4.0.12",
