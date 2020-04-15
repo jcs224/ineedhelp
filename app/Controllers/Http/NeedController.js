@@ -20,6 +20,8 @@ class NeedController {
   async showCurrentNeed({ auth, view }) {
     let need = await Need.query().where('helped_by', auth.user.id).where('status', 'inprogress').first()
 
+    need = need.toJSON()
+
     return view.render('need', {
       need: need,
       currentNeedView: true
