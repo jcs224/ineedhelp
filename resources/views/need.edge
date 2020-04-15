@@ -17,6 +17,16 @@
       <audio controls src="{{ need.recording_url }}"></audio>
     </div>
 
+    @if(need.status == 'inprogress')
+    <p>
+      If you need more information, reach out to the person by calling this number.
+    </p>
+    <p>
+      <strong>{{ need.need_phone_proxy }}</strong>
+    </p>
+
+    <div class="alert alert-warning"><strong>Please Note:</strong> This number is anonymous and only valid while this task is active. If you want to maintain contact with the person you're helping, you can do it with their consent outside of this app.</div>
+    @endif
     <div>
       @if(need.status == 'inprogress')
       <a href="/needs/{{ need.id }}/finish" class="btn btn-block btn-success" >I finished helping this person</a>
