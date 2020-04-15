@@ -21,7 +21,8 @@ const providers = [
   '@adonisjs/auth/providers/AuthProvider',
   '@adonisjs/websocket/providers/WsProvider',
   '@adonisjs/persona/providers/PersonaProvider',
-  '@adonisjs/validator/providers/ValidatorProvider'
+  '@adonisjs/validator/providers/ValidatorProvider',
+  '@adonisjs/ally/providers/AllyProvider'
 ]
 
 /*
