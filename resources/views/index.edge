@@ -84,6 +84,7 @@
           NeedModel.needs.length > 0 ? m('.row.row-cols-1.row-cols-sm-2.row-cols-lg-3', NeedModel.needs.map(function(need) {
             return m('.col.mb-4', [
               m('.card', [
+                m('.card-header', need.created_human_friendly),
                 m('.card-body', [
                   m('audio', {
                     controls: true,
