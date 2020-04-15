@@ -13,14 +13,6 @@ class Need extends Model {
     ]
   }
 
-  // static get visible() {
-  //   return [
-  //     'id',
-  //     'created_human_friendly',
-  //     'recording_url'
-  //   ]
-  // }
-
   getCreatedHumanFriendly({ created_at }) {
     return DateTime.fromSQL(created_at).toLocaleString(DateTime.DATETIME_FULL)
   }
