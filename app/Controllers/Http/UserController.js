@@ -42,7 +42,13 @@ class UserController {
   }
 
   async updateProfile({ auth, request, response, session }) {
-    const rules = { password: 'confirmed' }
+    const rules = {
+      first_name: 'required',
+      last_name: 'required',
+      email: 'required',
+      phone: 'required',
+      password: 'confirmed',
+    }
     const validation = await validate(request.all(), rules)
 
     if (validation.fails()) {

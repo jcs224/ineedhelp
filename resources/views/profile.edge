@@ -31,29 +31,58 @@
 <h1 class="text-center">Update Profile</h1>
 <div class="row justify-content-md-center">
   <div class="col-md-6 col-lg-4">
-    @if(hasErrorFor('password'))
-    <div class="alert alert-danger">{{ getErrorFor('password') }}</div>
-    @endif
     <form method="POST" action="/update-profile?_method=PUT">
       {{ csrfField() }}
       <div class="form-group">
         <label for="" class="label">First Name</label>
-        <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}">
+        <input type="text" class="
+          form-control
+          @if(hasErrorFor('first_name'))
+          is-invalid
+          @endif
+        " name="first_name" value="{{ user.first_name }}">
+        @if(hasErrorFor('first_name'))
+        <div class="invalid-feedback">{{ getErrorFor('first_name') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Last Name</label>
-        <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}">
+        <input type="text" class="
+          form-control
+          @if(hasErrorFor('last_name'))
+          is-invalid
+          @endif
+        " name="last_name" value="{{ user.last_name }}">
+        @if(hasErrorFor('last_name'))
+        <div class="invalid-feedback">{{ getErrorFor('last_name') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Email</label>
-        <input type="email" class="form-control" name="email" value="{{ user.email }}">
+        <input type="email" class="
+          form-control
+          @if(hasErrorFor('email'))
+          is-invalid
+          @endif
+        " name="email" value="{{ user.email }}">
+        @if(hasErrorFor('email'))
+        <div class="invalid-feedback">{{ getErrorFor('email') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Phone Number</label>
-        <input id="phone" class="form-control" name="phone_raw" value="{{ user.phone }}">
+        <input id="phone" class="
+          form-control
+          @if(hasErrorFor('phone'))
+          is-invalid
+          @endif
+        " name="phone_raw" value="{{ user.phone }}">
+        @if(hasErrorFor('phone'))
+        <div class="invalid-feedback">{{ getErrorFor('phone') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
@@ -63,7 +92,15 @@
 
       <div class="form-group">
         <label for="" class="label">Confirm Password</label>
-        <input type="password" class="form-control" name="password_confirmation">
+        <input type="password" class="
+          form-control
+          @if(hasErrorFor('password'))
+          is-invalid
+          @endif
+        " name="password_confirmation">
+        @if(hasErrorFor('password'))
+        <div class="invalid-feedback">{{ getErrorFor('password') }}</div>
+        @endif
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
