@@ -28,7 +28,7 @@ class NeedController {
     })
   }
 
-  async putBackInQueue({ params, response }) {
+  async putBackInQueue({ params, response, session }) {
     let need = await Need.find(params.id)
     need.status = 'open'
 
@@ -46,10 +46,14 @@ class NeedController {
       needsTopic.broadcast('need::backinqueue', need)
     }
 
+    session.flash({
+      notification: 'The need you were just assigned has been put back in the queue for someone else to try.'
+    })
+
     response.redirect('/')
   }
 
-  async finish({ params, response }) {
+  async finish({ params, response, session }) {
     let need = await Need.find(params.id)
     need.status = 'completed'
 
@@ -62,6 +66,10 @@ class NeedController {
     need.session_sid = null
 
     await need.save()
+
+    session.flash({
+      notification: 'The need you were just assigned has been fulfilled. Thank you!'
+    })
 
     response.redirect('/')
   }

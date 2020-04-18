@@ -59,6 +59,9 @@
   </nav>
 
   <div class="container mt-4">
+    @if(flashMessage('notification'))
+      <div class="alert alert-info">{{ flashMessage('notification') }}</div>
+    @endif
     @!section('content')
   </div>
 

@@ -102,6 +102,9 @@ class UserController {
 
     await user.save()
 
+    session.flash({
+      notification: 'Profile updated successfully.'
+    })
     response.redirect('/')
   }
 }
