@@ -81,7 +81,7 @@
           @endif
         " name="phone_raw" value="{{ user.phone }}">
         @if(hasErrorFor('phone'))
-        <div class="invalid-feedback">{{ getErrorFor('phone') }}</div>
+        <small class="text-danger">{{ getErrorFor('phone') }}</small>
         @endif
       </div>
 
