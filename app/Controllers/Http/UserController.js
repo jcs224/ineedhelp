@@ -46,7 +46,7 @@ class UserController {
     response.redirect('/')
   }
 
-  async login({ request, response, auth }) {
+  async login({ request, response, auth, session }) {
     let payload = request.only([
       'email',
       'password'
@@ -57,8 +57,14 @@ class UserController {
       password: payload.password
     }
 
-    let user = await Persona.verify(loginPayload)
-    await auth.login(user)
+    try {
+      await auth.attempt(request.input('email'), request.input('password'))
+    } catch (error) {
+      session.flash({ error: 'Email or password is incorrect.' })
+      session.flashAll()
+      return response.redirect('back')
+    }
+
     response.redirect('/')
   }
 

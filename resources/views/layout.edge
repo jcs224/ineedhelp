@@ -60,7 +60,12 @@
 
   <div class="container mt-4">
     @if(flashMessage('notification'))
-      <div class="alert alert-info">{{ flashMessage('notification') }}</div>
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ flashMessage('notification') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     @endif
     @!section('content')
   </div>
