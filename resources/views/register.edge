@@ -34,27 +34,67 @@
       {{ csrfField() }}
       <div class="form-group">
         <label for="" class="label">First Name</label>
-        <input type="text" class="form-control" name="first_name">
+        <input type="text" class="
+          form-control
+          @if(hasErrorFor('first_name'))
+          is-invalid
+          @endif
+        " name="first_name" value="{{ old('first_name', '') }}">
+        @if(hasErrorFor('first_name'))
+        <div class="invalid-feedback">{{ getErrorFor('first_name') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Last Name</label>
-        <input type="text" class="form-control" name="last_name">
+        <input type="text" class="
+          form-control
+          @if(hasErrorFor('last_name'))
+          is-invalid
+          @endif
+        " name="last_name" value="{{ old('last_name', '') }}">
+        @if(hasErrorFor('last_name'))
+        <div class="invalid-feedback">{{ getErrorFor('last_name') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Email</label>
-        <input type="email" class="form-control" name="email">
+        <input type="email" class="
+          form-control
+          @if(hasErrorFor('email'))
+          is-invalid
+          @endif
+        " name="email" value="{{ old('email', '') }}">
+        @if(hasErrorFor('email'))
+        <div class="invalid-feedback">{{ getErrorFor('email') }}</div>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Phone Number</label>
-        <input id="phone" class="form-control" name="phone_raw">
+        <input id="phone" class="
+          form-control
+          @if(hasErrorFor('phone'))
+          is-invalid
+          @endif
+        " name="phone_raw" value="{{ old('phone', '') }}">
+        @if(hasErrorFor('phone'))
+        <small class="text-danger">{{ getErrorFor('phone') }}</small>
+        @endif
       </div>
 
       <div class="form-group">
         <label for="" class="label">Password</label>
-        <input type="password" class="form-control" name="password">
+        <input type="password" class="
+          form-control
+          @if(hasErrorFor('password'))
+          is-invalid
+          @endif
+        " name="password">
+        @if(hasErrorFor('password'))
+        <div class="invalid-feedback">{{ getErrorFor('password') }}</div>
+        @endif
       </div>
 
       <div class="form-group">

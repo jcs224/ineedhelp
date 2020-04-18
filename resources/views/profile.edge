@@ -87,20 +87,20 @@
 
       <div class="form-group">
         <label for="" class="label">Password</label>
-        <input type="password" class="form-control" name="password">
-      </div>
-
-      <div class="form-group">
-        <label for="" class="label">Confirm Password</label>
         <input type="password" class="
           form-control
           @if(hasErrorFor('password'))
           is-invalid
           @endif
-        " name="password_confirmation">
+        " name="password">
         @if(hasErrorFor('password'))
         <div class="invalid-feedback">{{ getErrorFor('password') }}</div>
         @endif
+      </div>
+
+      <div class="form-group">
+        <label for="" class="label">Confirm Password</label>
+        <input type="password" class="form-control" name="password_confirmation">
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>

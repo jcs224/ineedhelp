@@ -5,7 +5,33 @@ const User = use('App/Models/User')
 const { validate } = use('Validator')
 
 class UserController {
-  async register({ request, response, auth }) {
+  async register({ request, response, session, auth }) {
+    const rules = {
+      first_name: 'required',
+      last_name: 'required',
+      email: 'required|unique:users,email',
+      phone: 'required',
+      password: 'required|confirmed',
+    }
+
+    let messages = {
+      'first_name.required': 'First name is required.',
+      'last_name.required': 'Last name is required.',
+      'email.required': 'A valid email address is required.',
+      'email.unique': 'This email has already been taken.',
+      'phone.required': 'A valid phone number is required.',
+      'password.required': 'Password is required.',
+      'password.confirmed': 'Password confirmation has failed.'
+    }
+
+    const validation = await validate(request.all(), rules, messages)
+
+    if (validation.fails()) {
+      console.log(validation.messages())
+      session.withErrors(validation.messages()).flashAll()
+      return response.redirect('back')
+    }
+
     let payload = request.only([
       'first_name',
       'last_name',
@@ -49,7 +75,16 @@ class UserController {
       phone: 'required',
       password: 'confirmed',
     }
-    const validation = await validate(request.all(), rules)
+
+    let messages = {
+      'first_name.required': 'First name is required.',
+      'last_name.required': 'Last name is required.',
+      'email.required': 'A valid email address is required.',
+      'phone.required': 'A valid phone number is required.',
+      'password.confirmed': 'Password confirmation has failed.'
+    }
+
+    const validation = await validate(request.all(), rules, messages)
 
     if (validation.fails()) {
       console.log(validation.messages())
