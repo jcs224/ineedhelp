@@ -1,19 +1,21 @@
 {
-  "name": "adonis-fullstack-app",
-  "version": "4.1.0",
-  "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "name": "ineedhelp",
+  "version": "0.1.0",
+  "adonis-version": "0.1.0",
+  "description": "A service for those who can't use social media or texting to ask for help",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "start-dev": "npx adonis serve --dev",
+    "deploy-prod": "git pull && pm2 reload server.js"
   },
   "keywords": [
     "adonisjs",
     "adonis-app"
   ],
-  "author": "",
-  "license": "UNLICENSED",
+  "author": "Joe Sweeney",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
