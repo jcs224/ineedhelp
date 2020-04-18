@@ -74,20 +74,26 @@ class NeedController {
     response.redirect('/')
   }
 
-  async help({ params, auth, response }) {
+  async help({ params, auth, response, session }) {
     let need = await Need.find(params.id)
+
+    if (need.phone == auth.user.phone) {
+      session.flash({ error: 'Your phone number matches the phone number of the person in need, which is not allowed. You have to help a person with a different phone number.' })
+      return response.redirect('back')
+    }
+
     need.status = 'inprogress'
     need.helped_by = auth.user.id
 
-    let session = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
+    let twilioSession = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
       .sessions.create({
         uniqueName: 'user-'+auth.user.id+'_need-'+need.id+'_'+uuidv4()
       })
 
-    need.session_sid = session.sid
+    need.session_sid = twilioSession.sid
 
     let needParticipant = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
-      .sessions(session.sid)
+      .sessions(twilioSession.sid)
       .participants
       .create({
         friendlyName: 'need-'+need.id,
@@ -97,7 +103,7 @@ class NeedController {
     need.need_phone_proxy = needParticipant.proxyIdentifier
 
     let userParticipant = await twilioClient.proxy.services(Env.get('TWILIO_PROXY_SERVICE_SID'))
-      .sessions(session.sid)
+      .sessions(twilioSession.sid)
       .participants
       .create({
         friendlyName: 'user-'+auth.user.id,

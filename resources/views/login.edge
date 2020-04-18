@@ -3,11 +3,6 @@
 @section('content')
 <div class="row justify-content-md-center">
   <div class="col-md-6 col-lg-4">
-    @if(flashMessage('error'))
-    <div class="alert alert-danger">
-      {{ flashMessage('error') }}
-    </div>
-    @endif
     <form method="POST" action="/login">
       {{ csrfField() }}
       <div class="form-group">
