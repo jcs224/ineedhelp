@@ -52,7 +52,7 @@ Then, edit the following values in the `.env` file:
 
 #### Set up database
 
-You can use MySQL, POSTGRES, MariaDB, MSSQL, or SQLite (Anything [Adonis](https://adonisjs.com/docs/4.1/database) supports). SQLite is the quickest setup, so we'll use that in these docs. Create a `.sqlite` in the `database` folder of the project.
+You can use MySQL, POSTGRES, MariaDB, MSSQL, or SQLite (Anything [Adonis](https://adonisjs.com/docs/4.1/database#_supported_databases) supports). SQLite is the quickest setup, so we'll use that in these docs. Create a `.sqlite` in the `database` folder of the project.
 ```bash
 cd database
 touch ineedhelp.sqlite
