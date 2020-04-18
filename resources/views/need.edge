@@ -25,7 +25,12 @@
       <strong>{{ need.need_phone_proxy_human_friendly }}</strong>
     </p>
 
-    <div class="alert alert-warning"><strong>Please Note:</strong> This number is anonymous and only valid while this task is active. If you want to maintain contact with the person you're helping, you can do it with their consent outside of this app.</div>
+    <div class="alert alert-warning">
+      <p>
+        <strong>Please Note:</strong> This number is anonymous and only valid while this task is active. If you want to maintain contact with the person you're helping, you can do it with their consent outside of this app.
+        <p><strong>These calls are <i>not</i> recorded.</strong></p>
+      </p>
+    </div>
     @endif
     <div>
       @if(need.status == 'inprogress')
