@@ -89,7 +89,7 @@ Using the video as reference, we already did the step with ngrok.
 - Change the `/sms` at the end to `/intro`. 
 - Change the `HTTP POST` dropdown to `HTTP GET`. It should look like this screenshot, but with a slightly different `ngrok` code:
 
-![Webhook screenshot](media/webhook.png)
+![Webhook screenshot](media/webhook.PNG)
 
 ### Usage
 
