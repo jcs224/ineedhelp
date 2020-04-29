@@ -59,9 +59,10 @@ touch ineedhelp.sqlite
 cd ..
 ```
 
-Then, we'll need to run database migrations:
+Then, we'll need to run database migrations and generate an app key:
 ```
 npx adonis migration:run
+npx adonis key:generate
 ```
 
 #### Run the application
