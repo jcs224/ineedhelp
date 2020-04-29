@@ -7,11 +7,11 @@
 <div class="row justify-content-md-center">
   <div class="col-md-4">
     @if(need.status == 'open')
-    <h2><span class="badge badge-success">Open</span></h2>
+    <h2><span class="badge badge-success">This need is open</span></h2>
     @elseif(need.status == 'inprogress')
-    <h2><span class="badge badge-primary">In Progress</span></h2>
+    <h2><span class="badge badge-primary">This need is being worked on</span></h2>
     @elseif(need.status == 'completed')
-    <h2><span class="badge badge-secondary">Completed</span></h2>
+    <h2><span class="badge badge-secondary">This need is finished</span></h2>
     @endif
     <div>
       <audio controls src="{{ need.recording_url }}"></audio>

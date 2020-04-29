@@ -25,25 +25,40 @@ const Ws = use('Ws')
 Route.on('/').render('index')
 
 // Twilio routes
-Route.get('intro', ({ response }) => {
+Route.get('intro', async ({ request, response }) => {
 
   const twiml = new VoiceResponse()
 
+  let need = await Need.query()
+    .where('phone', request.input('From'))
+    .where((builder) => {
+      return builder.where('status', 'open').orWhere('status', 'inprogress')
+    })
+  .first()
+
   twiml.say('Thanks for calling "I need help".')
 
-  const gather = twiml.gather({
-    input: 'dtmf',
-    numDigits: 1,
-    action: '/agreed',
-    method: 'GET'
-  })
-  gather.say('This call will be recorded and made available on a public website, where someone in your community can reach out to help you. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
-  gather.pause({
-    length: 3
-  })
-  twiml.redirect({
-    method: 'GET'
-  }, '/intro')
+  if (need) {
+    if (need.status == 'open') {
+      twiml.say('It appears a need has already been submitted from this number that isn\'nt finished. The current need will have to be resolved before you can submit another need from this number. Goodbye!')
+    } else if (need.status == 'inprogress') {
+      twiml.say('It appears a need submitted from this number is currently being worked on. It will have to be resolved before you can submit another request from this number. Goodbye!')
+    }
+  } else {
+    const gather = twiml.gather({
+      input: 'dtmf',
+      numDigits: 1,
+      action: '/agreed',
+      method: 'GET'
+    })
+    gather.say('This call will be recorded and made available on a public website, where someone in your community can reach out to help you. If you accept these terms, please press 1. If you do not accept these terms, please press any other number or hang up.')
+    gather.pause({
+      length: 3
+    })
+    twiml.redirect({
+      method: 'GET'
+    }, '/intro')
+  }
 
   return response.type('text/xml').send(twiml.toString())
 })
