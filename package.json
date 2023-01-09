@@ -33,7 +33,7 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
     "libphonenumber-js": "^1.7.50",
-    "luxon": "^1.23.0",
+    "luxon": "^2.5.2",
     "mysql": "^2.18.1",
     "sqlite3": "^4.1.1",
     "twilio": "^3.42.1",
